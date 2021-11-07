@@ -4,7 +4,7 @@ copiarlos y pegarlos en la terminal también):
 
 git add .
 
-git commit -m "Texto *opcional* acá. Generalmente para describir los cambios, pero podés saltarlo sin escribir siquiera las comillas."
+git commit -m "Texto que se usa generalmente para describir los cambios. Es *obligatorio*."
 
 git push -u origin master
 
