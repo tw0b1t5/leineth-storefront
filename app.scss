@@ -1,0 +1,200 @@
+@use "_variables" as *;
+@use "@material/theme" with (
+  $primary: #fcb8ab,
+  $secondary: #feeae6,
+  $on-primary: #442b2d,
+  $on-secondary: #442b2d,
+  );
+@use "@material/theme/variables" as *;
+@use "@material/theme/mdc-theme";
+@use "@material/theme/mixins";
+@use "@material/elevation/mdc-elevation";
+@use "node_modules/@material/drawer/mdc-drawer";
+@use "@material/list/mdc-list";
+@use "@material/ripple/mdc-ripple";
+@use "@material/image-list/mdc-image-list";
+
+// Remove all animations and transitions for people that prefer to not see them.
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}
+
+// Material Icons font.
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; // Preferred icon size.
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased; // Support for all WebKit browsers.
+  text-rendering: optimizeLegibility; // Support for Safari and Chrome.
+  -moz-osx-font-smoothing: grayscale; // Support for Firefox.
+  font-feature-settings: 'liga'; // Support for IE.
+}
+
+// Rules for sizing the icon.
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+// Rules for using icons as black on a light background.
+.material-icons.md-dark { color: rgba(0, 0, 0, .54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, .26); }
+
+// Rules for using icons as white on a dark background.
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, .3); }
+
+html,
+body {
+  background-color: var(--mdc-theme-primary, $mdc-theme-primary);
+  min-height: 100%;
+}
+
+.app-body {
+  background-color: var(--mdc-theme-primary, $mdc-theme-primary);
+  display: flex;
+}
+
+.app-drawer {
+  background-color: var(--mdc-theme-primary, $mdc-theme-primary);
+  z-index: 0;
+}
+
+// Indicador de eelemento seleccionado.
+:not(.mdc-list--non-interactive) > :not(.mdc-list-item--disabled).mdc-list-item--activated {
+  // background: rgba(0, 0, 0, .12) 90%/24px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 0 24 24' width='24px' fill='%23442c2e' style='opacity: .38;'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+  background-color: rgba(0, 0, 0, .12);
+  pointer-events: none;
+}
+
+:not(.mdc-list--non-interactive) > :not(.mdc-list-item--disabled).mdc-list-item--activated::before {
+  visibility: hidden;
+}
+
+.app-drawer .mdc-list-item--activated .mdc-list-item__graphic,
+.mdc-drawer .mdc-list-item--activated .mdc-list-item__text {
+  color: var(--mdc-theme-on-primary, $mdc-theme-on-primary);
+}
+
+@media only screen and (max-width: 1239px) {
+  .app-drawer {
+    width: 96px;
+  }
+
+  .app-drawer .mdc-drawer__header {
+    display: none;
+  }
+
+  .app-drawer .mdc-list-item {
+    border-radius: 0;
+    flex-direction: column;
+    height: calc(72px - 6px * 2);
+    justify-content: center;
+    margin: 0;
+    padding: 6px 8px;
+  }
+
+  .app-drawer .mdc-list-item__graphic {
+    margin: 0;
+  }
+}
+
+.app-contents {
+  background-color: var(--mdc-theme-background, $mdc-theme-background);
+  z-index: 4;
+}
+
+.product-list {
+  column-count: 2;
+  column-gap: 16px;
+  overflow: auto;
+  padding: 16px;
+}
+
+@media (min-width: 720px) {
+  .product-list {
+    column-count: 3;
+    column-gap: 24px;
+    padding: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-list {
+    column-count: 4;
+    column-gap: 32px;
+    padding: 32px;
+  }
+}
+
+@media (min-width: 1240px) {
+  .product-list {
+    column-gap: 48px;
+    padding: 48px;
+  }
+}
+
+.product-list .mdc-image-list__supporting {
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 50%;
+  position: relative;
+}
+
+.product-list .product-badge__container {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: -24px;
+  width: 100%;
+}
+
+.product-list .product-badge__badge {
+  align-items: center;
+  background-color: var(--mdc-theme-secondary, $mdc-theme-secondary);
+  border-radius: 50%;
+  color: var(--mdc-theme-on-secondary, $mdc-theme-on-secondary);
+  display: flex;
+  height: 48px;
+  justify-content: center;
+  user-select: none;
+  width: 48px;
+}
+
+.product-list .mdc-image-list__label {
+  font: 500 .875rem/1.375rem var(--font-family-2, $mdc-font-family-2);
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.00714em;
+  margin-top: 24px;
+  text-decoration: inherit;
+  text-transform: inherit;
+}
+
+.product-list .mdc-image-list__label--secondary {
+  font: 400 .875rem/1.375rem var(--font-family-2, $mdc-font-family-2);
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.00714em;
+  margin-top: .5em;
+  text-decoration: inherit;
+  text-transform: inherit;
+}

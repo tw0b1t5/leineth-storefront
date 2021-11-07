@@ -1,0 +1,134 @@
+@mixin ellipsis-text-flex {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin ellipsis-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin reset-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// Material icons styles
+@mixin mat-icon($fw: normal, $fz: 24px, $w: 24px, $h: 24px, $col: var(--text-theme-on-background)) {
+  display: inline-block;
+  font-family: 'Material Icons';
+  font-size: $fz;
+  font-weight: $fw;
+  width: $w;
+  height: $h;
+  line-height: 1;
+  font-style: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased; // Support for all WebKit browsers.
+  text-rendering: optimizeLegibility; // Support for Safari and Chrome.
+  -moz-osx-font-smoothing: grayscale; // Support for Firefox.
+  font-feature-settings: 'liga'; // Support for IE.
+}
+
+// Typography
+@mixin smooth-text {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-decoration: inherit;
+  text-transform: inherit;
+}
+
+@mixin mdc-headline1($fw: 300, $fs: 6rem, $lh: 6rem, $ff: $font-family-1, $ls: -.015625em) {
+  @include smooth-text;
+  font: #{$fw $fs} / #{$lh $ff};
+  letter-spacing: $ls;
+}
+
+@mixin mdc-headline2($fw: 300, $fs: 3.75rem, $lh: 3.75rem, $ff: $font-family-1, $ls: -.0083333333em) {
+  @include smooth-text;
+  font: #{$fw $fs} / #{$lh $ff};
+  letter-spacing: $ls;
+}
+
+@mixin mdc-headline3($fw: 400, $fs: 3rem, $lh: 3.125rem, $ff: $font-family-1, $ls: normal) {
+  @include smooth-text;
+  font: #{$fw $fs} / #{$lh $ff};
+  letter-spacing: $ls;
+}
+
+@mixin mdc-headline4($fw: 400, $fs: 2.125rem, $lh: 2.5rem, $ff: $font-family-1, $ls: .0073529412em) {
+  @include smooth-text;
+  font: #{$fw $fs} / #{$lh $ff};
+  letter-spacing: $ls;
+}
+
+@mixin mdc-headline5($fw: 400, $fs: 1.5rem, $lh: 2rem, $ff: $font-family-1, $ls: normal) {
+  @include smooth-text;
+  font: #{$fw $fs} / #{$lh $ff};
+  letter-spacing: $ls;
+}
+
+@mixin mdc-headline6($fw: 500, $fs: 1.25rem, $lh: 2rem, $ff: $font-family-1, $ls: .0125em) {
+  @include smooth-text;
+  font: #{$fw $fs} / #{$lh $ff};
+  letter-spacing: $ls;
+}
+
+@mixin mdc-subtitle1($fw: 400, $fs: 1rem, $lh: 1.75rem, $ff: $font-family-2, $ls: .009375em) {
+  @include smooth-text;
+  font: #{$fw $fs} / #{$lh $ff};
+  letter-spacing: $ls;
+}
+
+@mixin mdc-subtitle2($fw: 500, $fs: .875rem, $lh: 1.375rem, $ff: $font-family-2, $ls: .0071428571em) {
+  @include smooth-text;
+  font: #{$fw $fs} / #{$lh $ff};
+  letter-spacing: $ls;
+}
+
+@mixin mdc-body1($fw: 400, $fs: 1rem, $lh: 1.5rem, $ff: $font-family-2, $ls: .03125em) {
+  @include smooth-text;
+  font: #{$fw $fs} / #{$lh $ff};
+  letter-spacing: $ls;
+}
+
+@mixin mdc-body2($fw: 400, $fs: .875rem, $lh: 1.25rem, $ff: $font-family-2, $ls: .0178571429em) {
+  @include smooth-text;
+  font: #{$fw $fs} / #{$lh $ff};
+  letter-spacing: $ls;
+}
+
+@mixin mdc-caption($fw: 400, $fs: .75rem, $lh: 1.25rem, $ff: $font-family-2, $ls: .0333333333em) {
+  @include smooth-text;
+  font: #{$fw $fs} / #{$lh $ff};
+  letter-spacing: $ls;
+}
+
+@mixin mdc-button($fw: 500, $fs: .875rem, $lh: 2.25rem, $ff: $font-family-2, $ls: .0892857143em, $tt: uppercase) {
+  @include smooth-text;
+  font: #{$fw $fs} / #{$lh $ff};
+  letter-spacing: $ls;
+  text-transform: $tt;
+}
+
+@mixin mdc-overline($fw: 500, $fs: .75rem, $lh: 2rem, $ff: $font-family-2, $ls: .1666666667em, $tt: uppercase) {
+  @include smooth-text;
+  font: #{$fw $fs} / #{$lh $ff};
+  letter-spacing: $ls;
+  text-transform: $tt;
+}
+
+@mixin mdc-footnote($fw: 400, $fs: .75rem, $lh: 1.25rem, $ff: $font-family-2, $ls: normal) {
+  @include smooth-text;
+  font: #{$fw $fs} / #{$lh $ff};
+  letter-spacing: $ls;
+}
