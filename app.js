@@ -1,6 +1,6 @@
-import {MDCList} from "@material/list";
-import {MDCTooltip} from '@material/tooltip';
-import {MDCRipple} from '@material/ripple';
+import {MDCList} from "./node_modules/@material/list";
+import {MDCTooltip} from './node_modules/@material/tooltip';
+import {MDCRipple} from './node_modules/@material/ripple';
 
 // const listItemRipples = list.listElements.map((listItemEl) => new MDCRipple(listItemEl));
 // new MDCRipple(document.querySelector('.mdc-list-item__ripple'));

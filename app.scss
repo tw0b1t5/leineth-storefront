@@ -13,6 +13,7 @@
 @use "@material/list/mdc-list";
 @use "@material/ripple/mdc-ripple";
 @use "@material/image-list/mdc-image-list";
+// @use "@material/tooltip/tooltip";
 
 // Remove all animations and transitions for people that prefer to not see them.
 @media (prefers-reduced-motion: reduce) {
