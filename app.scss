@@ -1,21 +1,37 @@
-@use "_variables" as *;
-@use "@material/theme" with (
+// Tabla de contenidos.
+// 1. Importes.
+// 2. Preferencias del usuario.
+// 3. Componentes.
+// 4. Estilos generales.
+
+// 1. Importes.
+@use 'sass:color';
+@use '_variables' as *;
+@use '@material/theme' with (
   $primary: #fcb8ab,
   $secondary: #feeae6,
   $on-primary: #442b2d,
   $on-secondary: #442b2d,
   );
-@use "@material/theme/variables" as *;
-@use "@material/theme/mdc-theme";
-@use "@material/theme/mixins";
-@use "@material/elevation/mdc-elevation";
-@use "node_modules/@material/drawer/mdc-drawer";
-@use "@material/list/mdc-list";
-@use "@material/ripple/mdc-ripple";
-@use "@material/image-list/mdc-image-list";
-// @use "@material/tooltip/tooltip";
+@use '@material/theme/variables' as *;
+@use '@material/theme/mdc-theme';
+@use '@material/theme/mixins';
+@use '@material/typography/mdc-typography';
+@use '@material/drawer/mdc-drawer';
+@use '@material/list/mdc-list';
+@use '@material/image-list/mdc-image-list';
+@use '@material/layout-grid/mdc-layout-grid';
+@use '@material/ripple/mdc-ripple';
+@use '@material/elevation/mdc-elevation';
+@use '@material/button/mdc-button';
+@use '@material/dialog/mdc-dialog';
+@use '@material/dialog/mixins' as dialog;
 
-// Remove all animations and transitions for people that prefer to not see them.
+@include dialog.core-styles;
+
+// 2. Preferencias del usuario.
+// Removemos todas las animaciones y transiciones para aquellos que lo tengan
+// desactivados en sus preferencias del navegador o del SO.
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -30,12 +46,13 @@
   }
 }
 
-// Material Icons font.
+// 3. Componentes.
+// 3.1. Fuente de Material Icons.
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 24px; // Preferred icon size.
+  font-size: 24px; // Tamaño de icono preferido.
   display: inline-block;
   line-height: 1;
   text-transform: none;
@@ -43,26 +60,152 @@
   word-wrap: normal;
   white-space: nowrap;
   direction: ltr;
-  -webkit-font-smoothing: antialiased; // Support for all WebKit browsers.
-  text-rendering: optimizeLegibility; // Support for Safari and Chrome.
-  -moz-osx-font-smoothing: grayscale; // Support for Firefox.
-  font-feature-settings: 'liga'; // Support for IE.
+  -webkit-font-smoothing: antialiased; // Soporte para todos los navegadores Webkit.
+  text-rendering: optimizeLegibility; // Soporte para Safari y Chrome.
+  -moz-osx-font-smoothing: grayscale; // Soporte para Firefox.
+  font-feature-settings: 'liga'; // Soporte para IE.
 }
 
-// Rules for sizing the icon.
+// Reglas para los tamaños de los iconos.
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
 
-// Rules for using icons as black on a light background.
+// Reglas para usar iconos negros en fondo claro.
 .material-icons.md-dark { color: rgba(0, 0, 0, .54); }
 .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, .26); }
 
-// Rules for using icons as white on a dark background.
+// Reglas para usar iconos blancos en fondo oscuro.
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, .3); }
 
+// 3.2. Tooltips.
+// Debido a que los Tooltips de Material Design no funcionan, y por
+// limitaciones en el sofware, vamos a hacer una recreación de SCSS del Tooltip
+// sin JavaScript.
+// TODO: Implementar Toolstips nativos de Material Design.
+/* Tooltip CSS */
+
+[data-mdc-tooltip] {
+  position: relative;
+
+  &::before {
+    background: var(--mdc-theme-surface-secondary, color.adjust($mdc-theme-surface-secondary, $alpha: -.098)); // Color por defecto: rgba(97, 97, 97, .902)
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: var(--mdc-text-theme-primary-on-dark, $mdc-text-theme-primary-on-dark);
+    content: attr(data-mdc-tooltip);
+    font: 400 12px/16px var(--font-family-2, $mdc-font-family-2);
+    max-height: 20vh;
+    max-width: 200px;
+    min-height: 24px;
+    opacity: 0;
+    overflow: hidden;
+    padding: 4px 8px;
+    pointer-events: none;
+    position: absolute;
+    text-align: center;
+    transition: transform 0ms var(--mdc-standard-easing, $mdc-standard-easing) 650ms,
+                opacity 150ms var(--mdc-standard-easing, $mdc-standard-easing) 500ms;
+    width: max-content;
+  }
+  
+  &:hover::before,
+  &:focus::before,
+  &:active::before {
+    opacity: 1;
+    // La animación de transformación es invisible al dejar de enfocar al
+    // elemento, mientras que la de opacidad funciona normalmente.
+    transition: transform 75ms var(--mdc-standard-easing, $mdc-standard-easing) 600ms,
+                opacity 75ms var(--mdc-standard-easing, $mdc-standard-easing) 600ms;
+  }
+
+  &.mdc-tooltip--bottom {
+
+    &::before {
+      bottom: -36px;
+      transform: scale(0);  
+      transform-origin: top;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      &::before {
+        transform: scale(1);
+      }
+    }
+  }
+
+  &.mdc-tooltip--top {
+    &::before {
+      top: -36px;
+      transform: scale(0);
+      transform-origin: bottom center; 
+    } 
+
+    &:hover,
+    &:focus,
+    &:active {
+      &::before {
+        transform: scale(1);
+      }
+    }
+  }
+  
+  &.mdc-tooltip--right {
+    &::before {
+      right: -10px;
+      transform: translate(100%, -50%) scale(0);
+      transform-origin: left center; 
+      top: 50%;
+    }
+
+    &:hover::before,
+    &:focus::before,
+    &:active::before {
+      transform: translate(100%, -50%) scale(1);
+    }
+  }
+  
+  &.mdc-tooltip--left {
+    &::before {
+      left: -16px;
+      transform: translate(-100%, -50%) scale(0);
+      transform-origin: right center; 
+      top: 50%;
+    }
+
+    &:hover::before,
+    &:focus::before,
+    &:active::before {
+      transform: translate(-100%, -50%) scale(1);
+    }
+  }
+  
+  &.mdc-tooltip-disabled {
+    &::before {
+      display: none; 
+    }
+  }
+}
+
+.footer-social-list [data-mdc-tooltip].mdc-tooltip--top {
+
+  &::before {
+    left: 50%;
+    top: -44px;
+    transform: translateX(-50%) scale(0);
+  }
+
+  &:hover::before,
+  &:focus::before {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+// 4. Componentes.
 html,
 body {
   background-color: var(--mdc-theme-primary, $mdc-theme-primary);
@@ -70,7 +213,6 @@ body {
 }
 
 .app-body {
-  background-color: var(--mdc-theme-primary, $mdc-theme-primary);
   display: flex;
 }
 
@@ -81,7 +223,7 @@ body {
 
 // Indicador de eelemento seleccionado.
 :not(.mdc-list--non-interactive) > :not(.mdc-list-item--disabled).mdc-list-item--activated {
-  // background: rgba(0, 0, 0, .12) 90%/24px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 0 24 24' width='24px' fill='%23442c2e' style='opacity: .38;'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+  // background: rgba(0, 0, 0, .12) 90%/24px no-repeat url('data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 0 24 24' width='24px' fill='%23442c2e' style='opacity: .38;'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E');
   background-color: rgba(0, 0, 0, .12);
   pointer-events: none;
 }
@@ -118,8 +260,10 @@ body {
   }
 }
 
-.app-contents {
+.app {
   background-color: var(--mdc-theme-background, $mdc-theme-background);
+  display: flex;
+  flex-direction: column;
   z-index: 4;
 }
 
@@ -130,7 +274,11 @@ body {
   padding: 16px;
 }
 
-@media (min-width: 720px) {
+.product-list .mdc-image-list__item:not(:last-child) {
+  margin-bottom: 64px;
+}
+
+@media only screen and (min-width: 720px) {
   .product-list {
     column-count: 3;
     column-gap: 24px;
@@ -138,7 +286,7 @@ body {
   }
 }
 
-@media (min-width: 1024px) {
+@media only screen and (min-width: 1024px) {
   .product-list {
     column-count: 4;
     column-gap: 32px;
@@ -146,7 +294,7 @@ body {
   }
 }
 
-@media (min-width: 1240px) {
+@media only screen and (min-width: 1240px) {
   .product-list {
     column-gap: 48px;
     padding: 48px;
@@ -156,7 +304,6 @@ body {
 .product-list .mdc-image-list__supporting {
   flex-direction: column;
   justify-content: center;
-  margin-bottom: 50%;
   position: relative;
 }
 
@@ -180,11 +327,15 @@ body {
   width: 48px;
 }
 
+.product-list .product-badge__icon {
+  fill: currentColor;
+}
+
 .product-list .mdc-image-list__label {
   font: 500 .875rem/1.375rem var(--font-family-2, $mdc-font-family-2);
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  letter-spacing: 0.00714em;
+  letter-spacing: .00714em;
   margin-top: 24px;
   text-decoration: inherit;
   text-transform: inherit;
@@ -194,8 +345,86 @@ body {
   font: 400 .875rem/1.375rem var(--font-family-2, $mdc-font-family-2);
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  letter-spacing: 0.00714em;
+  letter-spacing: .00714em;
   margin-top: .5em;
   text-decoration: inherit;
   text-transform: inherit;
+}
+
+// Footer.
+.storefront-footer {
+  background-color: var(--mdc-theme-secondary, $mdc-theme-secondary);
+
+  .mdc-layout-grid {
+    padding: 48px;
+  }
+}
+
+.footer-navigation ul {
+  margin-top: 0;
+
+  a {
+    color: var(--mdc-theme-on-secondary, $mdc-theme-on-secondary);
+    outline: none;
+  }
+
+  a:not(:hover, :focus) {
+    text-decoration: none;
+  }
+}
+
+.footer-social-list {
+  align-items: center;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  
+  li:not(:last-child) {
+    margin-right: 16px;
+  }
+
+  a {
+    outline: none;
+
+    &:hover,
+    &:focus {
+
+      svg {
+        opacity: .6;
+      }
+    }
+  }
+
+  svg {
+    fill: var(--mdc-theme-on-secondary, $mdc-theme-on-secondary);
+  }
+}
+
+.footer-bottom-links {
+  align-items: center;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li:not(:last-child) {
+    margin-right: 12px;
+  }
+
+  a {
+    align-items: center;
+    color: var(--mdc-theme-on-secondary, $mdc-theme-on-secondary);
+    display: flex;
+    outline: none;
+  }
+
+  a:not(:hover, :focus) {
+    text-decoration: none;
+  }
+
+  svg {
+    fill: currentColor;
+    margin-right: 2px;
+  }
 }

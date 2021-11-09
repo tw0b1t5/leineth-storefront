@@ -23,9 +23,11 @@
   "dependencies": {
     "@material/button": "^6.0.0",
     "@material/drawer": "^6.0.0",
+    "@material/feature-targeting": "^8.0.0-canary.bd6e302a4.0",
     "@material/list": "^6.0.0",
     "@material/ripple": "^6.0.0",
     "@material/textfield": "^6.0.0",
+    "@material/tooltip": "^8.0.0-canary.bd6e302a4.0",
     "material-components-web": "^7.0.0"
   }
 }
